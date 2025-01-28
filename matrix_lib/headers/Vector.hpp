@@ -3,6 +3,8 @@
 #include <vector>
 #include "Matrix.hpp"
 
+class Matrix;
+
 class Vector
 {
 private:
@@ -20,8 +22,8 @@ public:
 	void showVector();
 	void showVector(Vector vec);
 
-	Matrix vecToMatrix();
-	Matrix vecToMatrix(Vector vec);
+	Matrix vecToMatrix(int n, int m);
+	Matrix vecToMatrix(Vector vec, int n, int m);
 };
 
 #endif
