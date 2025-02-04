@@ -1,15 +1,14 @@
 CXX = g++
 
+CFLAGS = -std=c++20
+
 ARCHIVE = ar rcs
 
-SRCS_PATH = src/
+HEADER_PATH = headers/
+HEADER_FILES = Matrix.hpp
+HEADERS = $(addprefix $(HEADER_PATH), $(HEADER_FILES))
 
-SRCS_FILES = 	Matrix.cpp\
-				Vector.cpp
-
-SRCS = $(addprefix $(SRCS_PATH), $(SRCS_FILES))
-
-OBJS = $(SRCS:.cpp=.o)
+OBJS = $(HEADERS:.hpp=.o)
 
 NAME = libmatrix.a
 
@@ -18,21 +17,22 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(ARCHIVE) $(NAME) $^
 
-%.o: %.cpp
-	$(CXX) -o $@ -c $<
+%.o: %.hpp
+	$(CXX) $(CFLAGS) -x c++ -o $@ -c $<
 
+.PHONY: clean
 clean:
-	rm $(OBJS)
+	-rm $(OBJS)
 
+.PHONY: fclean
 fclean: clean
-	rm $(NAME)
+	-rm $(NAME)
 
 re: fclean all
 
+.PHONY: test
 test: $(NAME)
 	$(CXX) -o test.out test.cpp libmatrix.a
 
 test_clean:
-	rm test.out
-
-.PHONY: all clean fclean re test test_clean
+	-rm test.out

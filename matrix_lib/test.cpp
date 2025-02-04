@@ -1,10 +1,9 @@
 #include "headers/Matrix.hpp"
-#include "headers/Vector.hpp"
 
 int main() {
 
-	std::vector<float> vec = {1, 2, 3, 4, 5};
-	Vector vector = Vector(vec);
+	std::vector<float> vec{1.f, 2.f, 3.f, 4.f, 5.f};
+	Vector<float> vector = Vector<float>(vec);
 
 	vector.showVector();
 	return 0;
