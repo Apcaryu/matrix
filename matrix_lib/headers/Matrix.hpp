@@ -18,16 +18,31 @@ class Matrix
 {
 private:
 	matrixShape shape;
-	// Vector* content;
+	std::vector<Vector<K>> content;
 
 public:
 	Matrix() {};
-	// Matrix(Vector* vecList);
+	Matrix(std::vector<Vector<K>> vecList) :
+	content(vecList)
+	{
+		shape.n = vecList[0].getSize();
+		shape.m = vecList.size();
+		
+	};
 	~Matrix() {};
 
-	// matrixShape getShape();
-	// bool isSquare();
-	// void printMatrix();
+	matrixShape getShape() { return shape; };
+	bool isSquare() {
+		if(shape.n == shape.m) return true;
+		return false;
+	};
+	void printMatrix(u_int64_t precision, u_int16_t width) {
+		for (auto vec : content) {
+			std::cout << "[ ";
+			vec.showVector(precision, width);
+			std::cout << " ]" << std::endl;
+		}
+	};
 
 	Vector<K> matrixToVector() {
 		Vector<K> vector;
@@ -55,10 +70,15 @@ public:
 		return vec.size();
 	};
 
-	void showVector() {
+	void showVector(u_int64_t precision, u_int16_t width) {
+		const auto default_precision{std::cout.precision()};
+		std::cout << std::setprecision(precision) << std::fixed;
+
 		for(K val : vec) {
-		std::cout << std::fixed << "[" << val << "]" << std::endl;
+		std::cout << "[" << val << "]" ;//<< std::endl;
 		}
+
+		std::cout << std::setprecision(default_precision) << std::defaultfloat;
 	};
 
 	Matrix<K> vecToMatrix(int n, int m) {
