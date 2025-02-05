@@ -29,14 +29,34 @@ public:
 		shape.m = vecList.size();
 		
 	};
+	Matrix(const Matrix<K> &matrixIn) { *this = matrixIn; };
 	~Matrix() {};
 
-	std::vector<Vector<K>> getMatrix() { return content; };
-	matrixShape getShape() { return shape; };
+	Matrix<K> & operator=(Matrix<K> const &rhs) {
+		shape = rhs.getShape();
+		content = rhs.getMatrix();
+		return *this;
+	};
+
+	std::vector<Vector<K>> getMatrix() const { return content; };
+	matrixShape getShape() const { return shape; };
 	bool isSquare() {
 		if(shape.n == shape.m) return true;
 		return false;
 	};
+
+	bool isEqual(Matrix<K> &rhs) const {
+		const matrixShape selfShape = this->getShape();
+		const matrixShape rhsShape = rhs.getShape();
+		if (selfShape.n == rhsShape.n && selfShape.m == rhsShape.m) {
+			for (int i; i<selfShape.m; i++) {
+				if (!content[i].isEqual(rhs.getMatrix()[i]))
+					return false;
+			}
+			return true;
+		}
+		return false;
+	}
 
 	bool append(Vector<K> vecIn) {
 		if (vecIn.getSize() == shape.n) {
@@ -67,8 +87,11 @@ public:
 	};
 
 	Vector<K> matrixToVector() {
-		Vector<K> vector;
-		return vector;
+		Vector<K> vectorOut;
+		for (auto vec : content) {
+			vectorOut.append(vec);
+		}
+		return vectorOut;
 	};
 };
 
@@ -85,12 +108,18 @@ public:
 	}
 	~Vector() {};
 
-	std::vector<K> getVec() {
+	std::vector<K> getVec() const {
 		return vec;
 	};
-	int getSize() {
+	int getSize() const {
 		return vec.size();
 	};
+
+	bool isEqual(Vector<K> &rhs) const {
+		if (this->getVec() == rhs.getVec())
+			return true;
+		return false;
+	}
 
 	void append(K value) {
 		vec.push_back(value);
@@ -113,12 +142,16 @@ public:
 	};
 
 	Matrix<K> vecToMatrix(int n, int m) {
-		Matrix<K> matrix;
-		return matrix;
-	};
-	Matrix<K> vecToMatrix(Vector<K> vec, int n, int m) {
-		Matrix<K> matrix;
-		return matrix;
+		std::vector<Vector<K>> vecList;
+
+		for(int i=0; i<m; i++) {
+			Vector<K> tmpVec;
+			for (int j=0; j<n; j++) {
+				tmpVec.append(this->getVec()[j + n*i]);
+			}
+			vecList.push_back(tmpVec);
+		}
+		return Matrix<K>(vecList);
 	};
 };
 

@@ -52,6 +52,32 @@ int main() {
 	matrix0.append(matrix1);
 	matrix0.printMatrix(2);
 
+	std::cout << "|----- convertion matrix to vector -----|" << std::endl;
+	Vector<float> superVec = matrix1.matrixToVector();
+	superVec.showVector(2);
+	std::cout << std::endl;
+
+	std::cout << "|----- convertion vector to matrix -----|" << std::endl;
+	Vector<float>vector1(std::vector<float>{16.f, 17.f, 18.f, 19.f, 20.f, 21.f});
+	Matrix<float> superMatrix0 = vector1.vecToMatrix(2,3);
+	superMatrix0.printMatrix(2);
+	
+	std::cout << "|----- convert matrix to vec and vec to matrix -----|" << std::endl;
+	Matrix<float> initMatrix1(matrix1);
+	Matrix<float> res = matrix1.matrixToVector().vecToMatrix(5, 5);
+	if (matrix1.isEqual(res)){
+		std::cout << "convert and rollback succed" << std::endl;
+	} else {
+		std::cout << "convert and rollback failled" << std::endl;
+	}
+
+	std::cout << "|----- convert vector to matrix and matrix to vec -----|" << std::endl;
+	Vector<float> res1 = vector1.vecToMatrix(3, 2).matrixToVector();
+	if (vector1.isEqual(res1)) {
+		std::cout << "convert and rollback succed" << std::endl;
+	} else {
+		std::cout << "convert and rollback failled" << std::endl;
+	}
 
 	return 0;
 }
