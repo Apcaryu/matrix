@@ -58,10 +58,10 @@ public:
 		return true;
 	};
 
-	void printMatrix(u_int64_t precision, u_int16_t width) {
+	void printMatrix(u_int64_t precision) {
 		for (auto vec : content) {
 			std::cout << "[ ";
-			vec.showVector(precision, width);
+			vec.showVector(precision);
 			std::cout << " ]" << std::endl;
 		}
 	};
@@ -101,7 +101,7 @@ public:
 		vec.push_back(val);
 	};
 
-	void showVector(u_int64_t precision, u_int16_t width) {
+	void showVector(u_int64_t precision) {
 		const auto default_precision{std::cout.precision()};
 		std::cout << std::setprecision(precision) << std::fixed;
 

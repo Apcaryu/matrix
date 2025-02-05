@@ -9,7 +9,7 @@ int main() {
 
 	Vector<float> vector = Vector<float>(vec0);
 	
-	vector.showVector(2, 4);
+	vector.showVector(2);
 	std::cout << std::endl;
 	
 
@@ -31,26 +31,26 @@ int main() {
 	std::cout << "isSquare: " << matrix1.isSquare() << std::endl;
 
 	std::cout << "matrix0" << std::endl;
-	matrix0.printMatrix(2, 4);
+	matrix0.printMatrix(2);
 	std::cout << "matrix1" << std::endl;
-	matrix1.printMatrix(2, 4);
+	matrix1.printMatrix(2);
 
 
 	std::cout << "|----- vec append tests -----|" << std::endl;
 	vector.append(6.f);
-	vector.showVector(2, 4);
+	vector.showVector(2);
 	std::cout << std::endl;
 
 	vector.append(vec2);
-	vector.showVector(2, 4);
+	vector.showVector(2);
 	std::cout << std::endl;
 
 	std::cout << "|----- matrix append tests -----|" << std::endl;
 	matrix0.append(vec3);
-	matrix0.printMatrix(2, 4);
+	matrix0.printMatrix(2);
 	std::cout << "----------" << std::endl;
 	matrix0.append(matrix1);
-	matrix0.printMatrix(2, 4);
+	matrix0.printMatrix(2);
 
 
 	return 0;
