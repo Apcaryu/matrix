@@ -31,11 +31,33 @@ public:
 	};
 	~Matrix() {};
 
+	std::vector<Vector<K>> getMatrix() { return content; };
 	matrixShape getShape() { return shape; };
 	bool isSquare() {
 		if(shape.n == shape.m) return true;
 		return false;
 	};
+
+	bool append(Vector<K> vecIn) {
+		if (vecIn.getSize() == shape.n) {
+			content.push_back(vecIn);
+			shape.m++;
+			return true;
+		}
+		return false;
+	};
+	bool append(Matrix<K> matrixIn) {
+		std::vector<Vector<K>> tmpMatrix = matrixIn.getMatrix();
+		for (auto vec : tmpMatrix) {
+			if (this->append(vec)) {
+				shape.m++;
+			} else {
+				return false;
+			}
+		}
+		return true;
+	};
+
 	void printMatrix(u_int64_t precision, u_int16_t width) {
 		for (auto vec : content) {
 			std::cout << "[ ";
@@ -68,6 +90,15 @@ public:
 	};
 	int getSize() {
 		return vec.size();
+	};
+
+	void append(K value) {
+		vec.push_back(value);
+	};
+	void append(Vector<K> vecIn) {
+		std::vector<K> tmpVec = vecIn.getVec();
+		for(auto val : tmpVec)
+		vec.push_back(val);
 	};
 
 	void showVector(u_int64_t precision, u_int16_t width) {

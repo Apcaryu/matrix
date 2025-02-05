@@ -5,12 +5,13 @@ int main() {
 	std::vector<float> vec0{01.f, 02.f, 03.f, 04.f, 05.f};
 	std::vector<float> vec1{06.f, 07.f, 08.f, 09.f, 10.f};
 	std::vector<float> vec2{11.f, 12.f, 13.f, 14.f, 15.f};
+	std::vector<float> vec3{16.f, 17.f, 18.f, 19.f, 20.f};
 
 	Vector<float> vector = Vector<float>(vec0);
 	
 	vector.showVector(2, 4);
 	std::cout << std::endl;
-
+	
 
 	std::vector<Vector<float>> vecList{vec0, vec1, vec2};
 
@@ -33,6 +34,24 @@ int main() {
 	matrix0.printMatrix(2, 4);
 	std::cout << "matrix1" << std::endl;
 	matrix1.printMatrix(2, 4);
+
+
+	std::cout << "|----- vec append tests -----|" << std::endl;
+	vector.append(6.f);
+	vector.showVector(2, 4);
+	std::cout << std::endl;
+
+	vector.append(vec2);
+	vector.showVector(2, 4);
+	std::cout << std::endl;
+
+	std::cout << "|----- matrix append tests -----|" << std::endl;
+	matrix0.append(vec3);
+	matrix0.printMatrix(2, 4);
+	std::cout << "----------" << std::endl;
+	matrix0.append(matrix1);
+	matrix0.printMatrix(2, 4);
+
 
 	return 0;
 }
