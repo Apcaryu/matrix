@@ -17,12 +17,12 @@ template <typename K>
 class Matrix
 {
 private:
-	matrixShape shape;
+	matrixShape shape{};
 	std::vector<Vector<K>> content;
 
 public:
-	Matrix() {};
-	Matrix(std::vector<Vector<K>> vecList) :
+	// Matrix() {};
+	explicit Matrix(std::vector<Vector<K>> vecList) :
 	content(vecList)
 	{
 		shape.n = vecList[0].getSize();
@@ -38,18 +38,18 @@ public:
 		return *this;
 	};
 
-	std::vector<Vector<K>> getMatrix() const { return content; };
-	matrixShape getShape() const { return shape; };
-	bool isSquare() {
+	[[nodiscard]] std::vector<Vector<K>> getMatrix() const { return content; };
+	[[nodiscard]] matrixShape getShape() const { return shape; };
+	[[nodiscard]] bool isSquare() const {
 		if(shape.n == shape.m) return true;
-		return false;
+			return false;
 	};
 
-	bool isEqual(Matrix<K> &rhs) const {
+	bool isEqual(const Matrix<K> &rhs) const {
 		const matrixShape selfShape = this->getShape();
 		const matrixShape rhsShape = rhs.getShape();
 		if (selfShape.n == rhsShape.n && selfShape.m == rhsShape.m) {
-			for (int i; i<selfShape.m; i++) {
+			for (int i=0; i<selfShape.m; i++) {
 				if (!content[i].isEqual(rhs.getMatrix()[i]))
 					return false;
 			}
@@ -66,7 +66,7 @@ public:
 		}
 		return false;
 	};
-	bool append(Matrix<K> matrixIn) {
+	bool append(const Matrix<K> matrixIn) {
 		std::vector<Vector<K>> tmpMatrix = matrixIn.getMatrix();
 		for (auto vec : tmpMatrix) {
 			if (this->append(vec)) {
@@ -78,7 +78,7 @@ public:
 		return true;
 	};
 
-	void printMatrix(u_int64_t precision) {
+	void printMatrix(u_int64_t precision) const {
 		for (auto vec : content) {
 			std::cout << "[ ";
 			vec.showVector(precision);
@@ -102,20 +102,14 @@ private:
 	std::vector<K> vec;
 
 public:
-	Vector() {};
-	Vector(std::vector<K> arrayIn) {
-		vec = arrayIn;
-	}
+	Vector() = default;
+	explicit Vector(std::vector<K> arrayIn) { vec = arrayIn; };
 	~Vector() {};
 
-	std::vector<K> getVec() const {
-		return vec;
-	};
-	int getSize() const {
-		return vec.size();
-	};
+	[[nodiscard]] std::vector<K> getVec() const { return vec; };
+	[[nodiscard]] int getSize() const {	return vec.size(); };
 
-	bool isEqual(Vector<K> &rhs) const {
+	bool isEqual(const Vector<K> &rhs) const {
 		if (this->getVec() == rhs.getVec())
 			return true;
 		return false;
@@ -124,24 +118,24 @@ public:
 	void append(K value) {
 		vec.push_back(value);
 	};
-	void append(Vector<K> vecIn) {
+	void append(const Vector<K> vecIn) {
 		std::vector<K> tmpVec = vecIn.getVec();
 		for(auto val : tmpVec)
-		vec.push_back(val);
+			vec.push_back(val);
 	};
 
-	void showVector(u_int64_t precision) {
-		const auto default_precision{std::cout.precision()};
-		std::cout << std::setprecision(precision) << std::fixed;
+	void showVector(const u_int64_t precision) {
+		const int default_precision{static_cast<int>(std::cout.precision())};
+		std::cout << std::setprecision(static_cast<int>(precision)) << std::fixed;
 
 		for(K val : vec) {
-		std::cout << "[" << val << "]" ;//<< std::endl;
+			std::cout << "[" << val << "]" ;//<< std::endl;
 		}
 
 		std::cout << std::setprecision(default_precision) << std::defaultfloat;
 	};
 
-	Matrix<K> vecToMatrix(int n, int m) {
+	Matrix<K> vecToMatrix(const int n, const int m) {
 		std::vector<Vector<K>> vecList;
 
 		for(int i=0; i<m; i++) {

@@ -13,7 +13,7 @@ int main() {
 	std::cout << std::endl;
 	
 
-	std::vector<Vector<float>> vecList{vec0, vec1, vec2};
+	std::vector<Vector<float>> vecList{Vector<float>(vec0), Vector<float>(vec1), Vector<float>(vec2)};
 
 	Matrix<float> matrix0(vecList);	
 	matrixShape matrix0Shape = matrix0.getShape();
@@ -22,8 +22,8 @@ int main() {
 	std::cout << "isSquare: " << matrix0.isSquare() << std::endl;
 
 	std::cout << "add two Vector" << std::endl;
-	vecList.push_back(Vector<float>(std::vector<float>{16.f, 17.f, 18.f, 19.f, 20.f}));
-	vecList.push_back(Vector<float>(std::vector<float>{21.f, 22.f, 23.f, 24.f, 25.f}));
+	vecList.emplace_back(std::vector<float>{16.f, 17.f, 18.f, 19.f, 20.f});
+	vecList.emplace_back(std::vector<float>{21.f, 22.f, 23.f, 24.f, 25.f});
 	
 	Matrix<float> matrix1(vecList);
 	matrixShape matrix1Shape = matrix1.getShape();
@@ -41,12 +41,12 @@ int main() {
 	vector.showVector(2);
 	std::cout << std::endl;
 
-	vector.append(vec2);
+	vector.append(Vector<float>(vec2));
 	vector.showVector(2);
 	std::cout << std::endl;
 
 	std::cout << "|----- matrix append tests -----|" << std::endl;
-	matrix0.append(vec3);
+	matrix0.append(Vector<float>(vec3));
 	matrix0.printMatrix(2);
 	std::cout << "----------" << std::endl;
 	matrix0.append(matrix1);
