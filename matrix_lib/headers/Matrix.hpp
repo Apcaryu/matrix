@@ -21,7 +21,7 @@ private:
 	std::vector<Vector<K>> content;
 
 public:
-	// Matrix() {};
+	Matrix() = default;
 	explicit Matrix(std::vector<Vector<K>> vecList) :
 	content(vecList)
 	{
@@ -30,7 +30,7 @@ public:
 		
 	};
 	Matrix(const Matrix<K> &matrixIn) { *this = matrixIn; };
-	~Matrix() {};
+	~Matrix() = default;
 
 	Matrix<K> & operator=(Matrix<K> const &rhs) {
 		shape = rhs.getShape();
@@ -38,6 +38,51 @@ public:
 		return *this;
 	};
 
+	void setValue(K valueIn, u_int64_t nPos, u_int64_t mPos) {
+		if (nPos < shape.n && mPos < shape.m) {
+			content[nPos].setValue(valueIn, mPos);
+			return;
+		}
+		throw;
+	};
+	void setLine(std::vector<K> lineIn, int nPos) {
+		if (lineIn.size() == shape.m) {
+			content[nPos] = Vector<K>(lineIn);
+			return;
+		}
+		throw;
+	};
+	void setColumn(std::vector<K> columnIn, int mPos) {
+		if (columnIn.size() == shape.n) {
+			int n = 0;
+			for (auto val : columnIn) {
+				content[n++].setValue(val, mPos);
+			}
+			return;
+		}
+		throw;
+	};
+
+	[[nodiscard]] K getValue(u_int64_t nPos, u_int64_t mPos) const {
+		if (nPos < shape.n && mPos < shape.m)
+			return content[nPos].getValue(mPos);
+		throw;
+	};
+	[[nodiscard]] std::vector<K> getLine(int nPos) const {
+		if (nPos < shape.n)
+			return content[nPos].getVec();
+		throw;
+	};
+	[[nodiscard]] std::vector<K> getColumn(int mPos) const {
+		if (mPos < shape.m) {
+			std::vector<K> result;
+			for (u_int64_t i = 0; i < shape.n; i++) {
+				result.push_back(content[i].getValue(mPos));
+			}
+			return result;
+		}
+		throw;
+	};
 	[[nodiscard]] std::vector<Vector<K>> getMatrix() const { return content; };
 	[[nodiscard]] matrixShape getShape() const { return shape; };
 	[[nodiscard]] bool isSquare() const {
@@ -104,8 +149,23 @@ private:
 public:
 	Vector() = default;
 	explicit Vector(std::vector<K> arrayIn) { vec = arrayIn; };
-	~Vector() {};
+	Vector(const Vector<K> &vectorIn) { *this = vectorIn; };
+	~Vector() = default;
 
+	Vector<K> & operator=(Vector<K> const &rhs) {
+		vec = rhs.getVec();
+		return *this;
+	}
+
+	void setValue(K valueIn, int nPos) {
+		vec[nPos] = valueIn;
+	};
+
+	[[nodiscard]] K getValue(int nPos) const {
+		if (nPos < vec.size())
+			return vec[nPos];
+		throw;
+	};
 	[[nodiscard]] std::vector<K> getVec() const { return vec; };
 	[[nodiscard]] int getSize() const {	return vec.size(); };
 
@@ -124,7 +184,7 @@ public:
 			vec.push_back(val);
 	};
 
-	void showVector(const u_int64_t precision) {
+	void showVector(const u_int64_t precision) const {
 		const int default_precision{static_cast<int>(std::cout.precision())};
 		std::cout << std::setprecision(static_cast<int>(precision)) << std::fixed;
 

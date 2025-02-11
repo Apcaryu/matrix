@@ -1,3 +1,5 @@
+#include <set>
+
 #include "headers/Matrix.hpp"
 
 int main() {
@@ -79,5 +81,28 @@ int main() {
 		std::cout << "convert and rollback failled" << std::endl;
 	}
 
+	float value = matrix1.getValue(2, 3);
+	std::cout << "value: " << value << std::endl;
+	std::vector<float> line = matrix1.getLine(2);
+	std::cout << "line: " << std::endl;
+	for (auto val : line) {
+		std::cout << "[ " << val << " ]" << std::endl;
+	}
+	std::vector<float> colum = matrix1.getColumn(3);
+	std::cout << "colum: " << std::endl;
+	for (auto val : colum) {
+		std::cout << "[ " << val << " ]" << std::endl;
+	}
+
+	std::cout << "|----- matrix set tests -----|" << std::endl;
+	std::vector<float> vec5{1.f, 2.f, 3.f, 4.f, 5.f};
+	matrix1.setColumn(vec5, 3);
+	matrix1.printMatrix(2);
+
+	matrix1.setLine(vec5, 2);
+	matrix1.printMatrix(2);
+
+	matrix1.setValue(100.f, 4, 2);
+	matrix1.printMatrix(2);
 	return 0;
 }
