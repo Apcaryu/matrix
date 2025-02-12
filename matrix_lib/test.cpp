@@ -188,5 +188,8 @@ int main() {
 		std::cout << "exception thrown: " << error.what() << std::endl;
 	}
 
+	std::cout << "|----- overload << tests -----|" << std::endl;
+	std::cout << "vector = " << vector << std::endl;
+	std::cout << "matrix = \n" << matrix1 << std::endl;
 	return 0;
 }

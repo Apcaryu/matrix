@@ -133,6 +133,7 @@ public:
 		}
 		return vectorOut;
 	};
+
 };
 
 template <typename K>
@@ -205,6 +206,20 @@ public:
 		return Matrix<K>(vecList);
 	};
 };
+template <typename K>
+std::ostream &operator<<(std::ostream &os, const Matrix<K> &matrix) {
+	for (auto vec : matrix.getMatrix()) {
+		os << "[ " << vec << " ]" << std::endl;
+	}
+	return os;
+}
 
+template <typename K>
+std::ostream & operator<<(std::ostream &os, const Vector<K> &vecIn) {
+	for (auto val : vecIn.getVec()) {
+		os << "[" << val << "]";
+	}
+	return os;
+}
 
 #endif
