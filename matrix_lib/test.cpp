@@ -166,5 +166,27 @@ int main() {
 	} catch (std::invalid_argument const &error) {
 		std::cout << "exception thrown: " << error.what() << std::endl;
 	}
+
+	std::cout << "|----- vector set tests -----|" << std::endl;
+	std::cout << "before setValue: ";
+	vector.showVector(2);
+	std::cout << std::endl;
+	vector.setValue(8.f, 2);
+	std::cout << "after setValue: ";
+	vector.showVector(2);
+	std::cout << std::endl;
+	try {
+		vector.setValue(8.f, 1000);
+	} catch (std::invalid_argument const &error) {
+		std::cout << "exception thrown : " << error.what() << std::endl;
+	}
+
+	std::cout << "value at 4: " << vector.getValue(4) << std::endl;
+	try {
+		[[maybe_unused]] auto eValue = vector.getValue(1000);
+	} catch (std::invalid_argument const &error) {
+		std::cout << "exception thrown: " << error.what() << std::endl;
+	}
+
 	return 0;
 }

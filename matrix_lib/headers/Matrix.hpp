@@ -153,13 +153,15 @@ public:
 	}
 
 	void setValue(K valueIn, int nPos) {
+		if (nPos >= vec.size())
+			throw std::invalid_argument("Vector nPos out of range");
 		vec[nPos] = valueIn;
 	};
 
 	[[nodiscard]] K getValue(int nPos) const {
-		if (nPos < vec.size())
-			return vec[nPos];
-		throw;
+		if (nPos >= vec.size())
+			throw std::invalid_argument("Vector nPos out of range");
+		return vec[nPos];
 	};
 	[[nodiscard]] std::vector<K> getVec() const { return vec; };
 	[[nodiscard]] int getSize() const {	return vec.size(); };
