@@ -25,8 +25,8 @@ public:
 	explicit Matrix(std::vector<Vector<K>> vecList) :
 	content(vecList)
 	{
-		shape.n = vecList[0].getSize();
-		shape.m = vecList.size();
+		shape.m = vecList[0].getSize();
+		shape.n = vecList.size();
 		
 	};
 	Matrix(const Matrix<K> &matrixIn) { *this = matrixIn; };
@@ -39,55 +39,52 @@ public:
 	};
 
 	void setValue(K valueIn, u_int64_t nPos, u_int64_t mPos) {
-		if (nPos < shape.n && mPos < shape.m) {
-			content[nPos].setValue(valueIn, mPos);
-			return;
-		}
-		throw;
+		if (nPos >= shape.n || mPos >= shape.m)
+			throw std::invalid_argument("Matrix nPos or mPos out of range");
+		content[nPos].setValue(valueIn, mPos);
 	};
 	void setLine(std::vector<K> lineIn, int nPos) {
-		if (lineIn.size() == shape.m) {
-			content[nPos] = Vector<K>(lineIn);
-			return;
-		}
-		throw;
+		if (lineIn.size() != shape.m)
+			throw std::invalid_argument("Matrix line size must match");
+		if (nPos >= shape.n)
+			throw std::invalid_argument("Matrix nPos out of range");
+		content[nPos] = Vector<K>(lineIn);
 	};
 	void setColumn(std::vector<K> columnIn, int mPos) {
-		if (columnIn.size() == shape.n) {
-			int n = 0;
-			for (auto val : columnIn) {
-				content[n++].setValue(val, mPos);
-			}
-			return;
+		if (columnIn.size() != shape.n)
+			throw std::invalid_argument("Matrix column size must match");
+		if (mPos >= shape.m)
+			throw std::invalid_argument("Matrix mPos out of range");
+		int n = 0;
+		for (auto val : columnIn) {
+			content[n++].setValue(val, mPos);
 		}
-		throw;
 	};
 
 	[[nodiscard]] K getValue(u_int64_t nPos, u_int64_t mPos) const {
-		if (nPos < shape.n && mPos < shape.m)
-			return content[nPos].getValue(mPos);
-		throw;
+		if (nPos >= shape.n || mPos >= shape.m)
+			throw std::invalid_argument("Matrix nPos or mPos out of range");
+		return content[nPos].getValue(mPos);
 	};
 	[[nodiscard]] std::vector<K> getLine(int nPos) const {
-		if (nPos < shape.n)
-			return content[nPos].getVec();
-		throw;
+		if (nPos >= shape.n)
+			throw std::invalid_argument("Matrix nPos out of range");
+		return content[nPos].getVec();
 	};
 	[[nodiscard]] std::vector<K> getColumn(int mPos) const {
-		if (mPos < shape.m) {
-			std::vector<K> result;
-			for (u_int64_t i = 0; i < shape.n; i++) {
-				result.push_back(content[i].getValue(mPos));
-			}
-			return result;
+		if (mPos >= shape.m)
+			throw std::invalid_argument("Matrix mPos out of range");
+		std::vector<K> result;
+		for (u_int64_t i = 0; i < shape.n; i++) {
+			result.push_back(content[i].getValue(mPos));
 		}
-		throw;
+		return result;
 	};
 	[[nodiscard]] std::vector<Vector<K>> getMatrix() const { return content; };
 	[[nodiscard]] matrixShape getShape() const { return shape; };
 	[[nodiscard]] bool isSquare() const {
 		if(shape.n == shape.m) return true;
-			return false;
+		return false;
 	};
 
 	bool isEqual(const Matrix<K> &rhs) const {
@@ -103,24 +100,22 @@ public:
 		return false;
 	}
 
-	bool append(Vector<K> vecIn) {
-		if (vecIn.getSize() == shape.n) {
-			content.push_back(vecIn);
-			shape.m++;
-			return true;
+	void append(Vector<K> vecIn) {
+		if (vecIn.getSize() != shape.m) {
+			throw std::invalid_argument("Matrix vecIn size must match");
 		}
-		return false;
+		content.push_back(vecIn);
+		shape.n++;
 	};
-	bool append(const Matrix<K> matrixIn) {
+	void append(const Matrix<K> matrixIn) {
 		std::vector<Vector<K>> tmpMatrix = matrixIn.getMatrix();
 		for (auto vec : tmpMatrix) {
-			if (this->append(vec)) {
-				shape.m++;
-			} else {
-				return false;
+			try {
+				this->append(vec);
+			} catch (...) {
+				throw std::invalid_argument("Matrix append failed");
 			}
 		}
-		return true;
 	};
 
 	void printMatrix(u_int64_t precision) const {
