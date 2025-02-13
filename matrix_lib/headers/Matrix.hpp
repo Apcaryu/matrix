@@ -134,6 +134,10 @@ public:
 		return vectorOut;
 	};
 
+	void add(Matrix<K> matrixIn) {}
+	void substract(Matrix<K> matrixIn) {}
+	void scale(K const scl) {}
+
 };
 
 template <typename K>
@@ -205,7 +209,13 @@ public:
 		}
 		return Matrix<K>(vecList);
 	};
+
+	void add(Vector<K> vecIn) {}
+	void substract(Vector<K> vecIn) {}
+	void scale(K const scl) {}
 };
+
+
 template <typename K>
 std::ostream &operator<<(std::ostream &os, const Matrix<K> &matrix) {
 	for (auto vec : matrix.getMatrix()) {

@@ -49,7 +49,7 @@ int main() {
 	matrix0.append(Vector<float>(vec3));
 	matrix0.printMatrix(2);
 	try {
-		matrix0.append(Vector<float>(std::vector{16.f, 17.f, 18.f, 19.f, 20.f, 21.f}));
+		matrix0.append(Vector<float>(std::vector<float>{16.f, 17.f, 18.f, 19.f, 20.f, 21.f}));
 	} catch (const std::exception& error) {
 		std::cout << "exception throw: " << error.what() << std::endl;
 	}

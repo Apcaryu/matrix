@@ -6,7 +6,7 @@ lib:
 exercice00:
 	make -C Exercice00/
 
-PHONY: clean
+.PHONY: clean
 clean:
 	make clean -C Exercice00/
 	make clean -C matrix_lib/
