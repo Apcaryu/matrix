@@ -8,13 +8,46 @@ int main() {
 	Matrix<float> matrix0(std::vector<Vector<float>>{vector0, vector1});
 	Matrix<auto> matrix1(matrix0);
 
+	std::cout << "|----- adder tests -----|" << std::endl;
+	std::cout << "vector0: " << vector0 << std::endl;
+	std::cout << "vector1: " << vector1 << std::endl;
+	std::cout << "vector0 + vector1: " << std::endl;
 	vector0.add(vector1);
+	std::cout << "vector0: " << vector0 << std::endl;
+
+	try {
+		const std::vector<float> badVector{1, 2, 3, 4};
+		vector0.add(Vector(badVector));
+	} catch(std::exception& e) {
+		std::cout << "exception throw: " << e.what() << std::endl;
+	}
+
 	matrix0.add(matrix1);
 
-	vector0.substract(vector1);
-	matrix0.substract(matrix1);
+	std::cout << "|----- subtract tests -----|" << std::endl;
+	std::cout << "vector0: " << vector0 << std::endl;
+	std::cout << "vector1: " << vector1 << std::endl;
+	std::cout << "vector0 - vector1: " << std::endl;
+	vector0.subtract(vector1);
+	std::cout << "vector0: " << vector0 << std::endl;
 
+	try {
+		const std::vector<float> badMatrix{1, 2, 3, 4};
+		vector0.subtract(Vector(badMatrix));
+	} catch(std::exception& e) {
+		std::cout << "exception throw: " << e.what() << std::endl;
+	}
+	matrix0.subtract(matrix1);
+
+	std::cout << "|----- scale tests -----|" << std::endl;
+	std::cout << "vector0: " << vector0 << std::endl;
+	std::cout << "vector1: " << vector1 << std::endl;
+	std::cout << "vector0 * 2.0: " << std::endl;
 	vector0.scale(2.0);
+	std::cout << "vector0: " << vector0 << std::endl;
+
 	matrix0.scale(2.0);
+
+
 	return 0;
 }

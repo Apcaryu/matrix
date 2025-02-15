@@ -135,7 +135,7 @@ public:
 	};
 
 	void add(Matrix<K> matrixIn) {}
-	void substract(Matrix<K> matrixIn) {}
+	void subtract(Matrix<K> matrixIn) {}
 	void scale(K const scl) {}
 
 };
@@ -210,9 +210,25 @@ public:
 		return Matrix<K>(vecList);
 	};
 
-	void add(Vector<K> vecIn) {}
-	void substract(Vector<K> vecIn) {}
-	void scale(K const scl) {}
+	void add(const Vector<K> vecIn) {
+		if (vecIn.getSize() != this->getSize())
+			throw std::invalid_argument("Vector size must match");
+		for (int i=0; i<vec.size(); i++) {
+			vec[i] += vecIn.getVec()[i];
+		}
+	}
+	void subtract(Vector<K> vecIn) {
+		if (vecIn.getSize() != this->getSize())
+			throw std::invalid_argument("Vector size must match");
+		for (int i=0; i<vec.size(); i++) {
+			vec[i] -= vecIn.getVec()[i];
+		}
+	}
+	void scale(K const scl) {
+		for (int i=0; i<vec.size(); i++) {
+			vec[i] *= scl;
+		}
+	}
 };
 
 
