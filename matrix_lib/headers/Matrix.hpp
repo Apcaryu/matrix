@@ -230,7 +230,7 @@ public:
 		}
 	}
 
-	static Vector<K> linear_conbination(std::vector<Vector<K>>& u, std::vector<K>& coefs) {
+	static Vector<K> linear_conbination(const std::vector<Vector<K>>& u, const std::vector<K>& coefs) {
 		return Vector();
 	}
 };

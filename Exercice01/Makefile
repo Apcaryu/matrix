@@ -15,6 +15,12 @@ all : compile_lib $(TEST)
 compile_lib:
 	make -C ../matrix_lib/
 
+$(TEST): $(OBJS_TEST)
+	$(CXX) -o $(TEST) $(OBJS_TEST) $(LIB)
+
+$(OBJS_TEST):
+	$(CXX) $(CFLAGS) -o $(OBJS_TEST) -c $(TEST_FILE)
+
 PHONY: clean
 clean:
 	-rm $(OBJS_TEST)
@@ -24,9 +30,3 @@ fclean: clean
 	-rm $(TEST)
 
 re: fclean all
-
-$(TEST): $(OBJS_TEST)
-	$(CXX) -o $(TEST) $(OBJS_TEST) $(LIB)
-
-$(OBJS_TEST):
-	$(CXX) $(CFLAGS) -o $(OBJS_TEST) -c $(TEST_FILE)
