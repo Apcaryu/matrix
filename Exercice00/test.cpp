@@ -6,7 +6,7 @@ int main() {
 	Vector<float> vector1(vec);
 
 	Matrix<float> matrix0(std::vector<Vector<float>>{vector0, vector1});
-	Matrix<auto> matrix1(matrix0);
+	Matrix<float> matrix1(matrix0);
 
 	std::cout << "|----- adder tests -----|" << std::endl;
 	std::cout << "vector0: " << vector0 << std::endl;

@@ -229,6 +229,10 @@ public:
 			vec[i] *= scl;
 		}
 	}
+
+	static Vector<K> linear_conbination(std::vector<Vector<K>>& u, std::vector<K>& coefs) {
+		return Vector();
+	}
 };
 
 
