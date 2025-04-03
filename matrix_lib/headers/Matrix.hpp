@@ -230,8 +230,22 @@ public:
 		}
 	}
 
-	static Vector<K> linear_conbination(const std::vector<Vector<K>>& u, const std::vector<K>& coefs) {
-		return Vector();
+	static Vector<K> linear_combination(const std::vector<Vector<K>>& u, const std::vector<K>& coefs) {
+		if (u.empty() || coefs.empty() || u.size() != coefs.size()) { throw std::invalid_argument("invalid arguments"); }
+		int size_of_vectors = u[0].getSize();
+		for (auto vec: u) {
+			if (vec.getSize() != size_of_vectors) { throw std::invalid_argument("size of vector must be the same"); }
+		}
+
+		Vector<K> vector_out;
+		for (int idx = 0; idx < size_of_vectors; idx++) {
+			K tmp_res = 0;
+			for (int jdx = 0; jdx < coefs.size(); jdx++) {
+				tmp_res += u[jdx].getValue(idx) * coefs[jdx];
+			}
+			vector_out.append(tmp_res);
+		}
+		return vector_out;
 	}
 };
 

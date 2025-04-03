@@ -21,7 +21,7 @@ int main() {
 	//----- SIZE OF VECTORS IN LIST TEST -----//
 	printf("|----- SIZE OF VECTORS IN LIST TEST -----|\n");
 	try {
-		Vector<float>::linear_conbination(std::vector{vector1_0, vector2_0}, std::vector{0.f, 0.f});
+		Vector<float>::linear_combination(std::vector{vector1_0, vector2_0}, std::vector{0.f, 0.f});
 		throw std::exception();
 	} catch (std::invalid_argument&) {
 		printf("verification size of vectors in list succeed\n");
@@ -30,7 +30,7 @@ int main() {
 	}
 
 	try {
-		Vector<float>::linear_conbination(std::vector{vector3_0, vector2_0}, std::vector{0.f, 0.f});
+		Vector<float>::linear_combination(std::vector{vector3_0, vector2_0}, std::vector{0.f, 0.f});
 		throw std::exception();
 	} catch (std::invalid_argument&) {
 		printf("verification size of vectors in list succeed\n");
@@ -39,7 +39,7 @@ int main() {
 	}
 
 	try {
-		Vector<float>::linear_conbination(std::vector{vector1_0, vector1_0}, std::vector{0.f, 0.f});
+		Vector<float>::linear_combination(std::vector{vector1_0, vector1_0}, std::vector{0.f, 0.f});
 		printf("verification size of vectors in list succeed\n");
 	} catch (std::exception&) {
 		printf("verification size of vectors in list failed\n");
@@ -49,7 +49,7 @@ int main() {
 	//----- SIZE OF LIST IN PARAMETERS TEST -----//
 	printf("|----- SIZE OF LIST IN PARAMETERS TEST -----|\n");
 	try {
-		Vector<float>::linear_conbination(std::vector{vector1_0}, coefs2);
+		Vector<float>::linear_combination(std::vector{vector1_0}, coefs2);
 		throw std::exception();
 	} catch (std::invalid_argument&) {
 		printf("verification size of list succeed\n");
@@ -58,7 +58,7 @@ int main() {
 	}
 
 	try {
-		Vector<float>::linear_conbination(std::vector{vector1_0,vector1_1}, coefs1);
+		Vector<float>::linear_combination(std::vector{vector1_0,vector1_1}, coefs1);
 		throw std::exception();
 	} catch (std::invalid_argument&) {
 		printf("verification size of list succeed\n");
@@ -67,7 +67,7 @@ int main() {
 	}
 
 	try {
-		Vector<float>::linear_conbination(std::vector{vector1_0}, coefs1);
+		Vector<float>::linear_combination(std::vector{vector1_0}, coefs1);
 		printf("verification size of list succeed\n");
 	} catch (std::exception&) {
 		printf("verification size of lists failed\n");
@@ -76,14 +76,17 @@ int main() {
 
 	//----- RESULT TEST -----//
 	printf("|----- RESULT TEST -----|\n");
-	Vector res1 = Vector<float>::linear_conbination(std::vector{vector1_0}, coefs1);
+	Vector res1 = Vector<float>::linear_combination(std::vector{vector1_0}, coefs1);
 	if (res1.getVec() == std::vector{3.f}) { printf("res1 succeed\n"); } else { printf("res1 failed\n"); }
 
-	Vector res2 = Vector<float>::linear_conbination(std::vector{vector2_0, vector2_1}, coefs2);
-	if (res1.getVec() == std::vector{12.f, 20.f}) { printf("res1 succeed\n"); } else { printf("res1 failed\n"); }
+	Vector res2 = Vector<float>::linear_combination(std::vector{vector2_0, vector2_1}, coefs2);
+	if (res2.getVec() == std::vector{12.f, 20.f}) { printf("res2 succeed\n"); } else { printf("res2 failed\n"); }
 
-	Vector res3 = Vector<float>::linear_conbination(std::vector{vector3_0, vector3_1, vector3_2}, coefs3);
-	if (res1.getVec() == std::vector{-15.f, 40.f, 8.f}) { printf("res1 succeed\n"); } else { printf("res1 failed\n"); }
+	Vector res3 = Vector<float>::linear_combination(std::vector{vector3_0, vector3_1, vector3_2}, coefs3);
+	if (res3.getVec() == std::vector{24.f, 13.f, -10.f}) { printf("res3 succeed\n"); } else { printf("res3 failed\n"); }
+
+	Vector res4 = Vector<float>::linear_combination(std::vector{vector2_0}, coefs1);
+	if (res4.getVec() == std::vector{0.f, 3.f}) { printf("res4 succeed\n"); } else { printf("res4 failed\n"); }
 
 	printf("\n");
 	//------ SUBJECT TEST -----//
@@ -95,8 +98,8 @@ int main() {
 	Vector v1(std::vector{1.f, 2.f, 3.f});
 	Vector v2(std::vector{0.f, 10.f, -100.f});
 
-	Vector res_e(Vector<float>::linear_conbination(std::vector{e1, e2, e3}, std::vector{10.f, -2.f, .5f}));
-	res_e.showVector(2);
+	Vector res_e(Vector<float>::linear_combination(std::vector{e1, e2, e3}, std::vector{10.f, -2.f, .5f}));
+	// res_e.showVector(2);
 	try {
 		std::vector expected_result{10.f, -2.f, .5f};
 		if (res_e.getVec() != expected_result) {
@@ -106,8 +109,8 @@ int main() {
 	} catch ([[maybe_unused]] std::exception& e) {
 		printf("res_e have not the expected value\n");
 	}
-	Vector res_v(Vector<float>::linear_conbination(std::vector{v1, v2}, std::vector{10.f, -2.f}));
-	res_v.showVector(2);
+	Vector res_v(Vector<float>::linear_combination(std::vector{v1, v2}, std::vector{10.f, -2.f}));
+	// res_v.showVector(2);
 	try {
 		std::vector expected_result{10.f, 0.f, 230.f};
 		if (res_v.getVec() != expected_result) {
