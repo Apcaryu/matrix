@@ -134,9 +134,37 @@ public:
 		return vectorOut;
 	};
 
-	void add(Matrix<K> matrixIn) {}
-	void subtract(Matrix<K> matrixIn) {}
-	void scale(K const scl) {}
+	void add(Matrix<K> matrixIn) {
+		if (this->getShape().n != matrixIn.getShape().n || this->getShape().m != matrixIn.getShape().m) {
+			throw std::invalid_argument("the shape of matrices must be the same");
+		}
+
+		for (int yPos = 0; yPos < this->getShape().n; yPos++) {
+			Vector<K> tmp_vec(this->getLine(yPos));
+			tmp_vec.add(Vector<K>(matrixIn.getLine(yPos)));
+			this->setLine(tmp_vec.getVec(), yPos);
+		}
+
+	}
+	void subtract(Matrix<K> matrixIn) {
+		if (this->getShape().n != matrixIn.getShape().n || this->getShape().m != matrixIn.getShape().m) {
+			throw std::invalid_argument("the shape of matrices must be the same");
+		}
+
+		for (int yPos = 0; yPos < this->getShape().n; yPos++) {
+			Vector<K> tmp_vec(this->getLine(yPos));
+			tmp_vec.subtract(Vector<K>(matrixIn.getLine(yPos)));
+			this->setLine(tmp_vec.getVec(), yPos);
+		}
+
+	}
+	void scale(K const scl) {
+		for (int yPos = 0; yPos < this->getShape().n; yPos++) {
+			Vector<K> tmp_vec(this->getLine(yPos));
+			tmp_vec.scale(scl);
+			this->setLine(tmp_vec.getVec(), yPos);
+		}
+	}
 
 };
 
