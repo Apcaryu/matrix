@@ -22,7 +22,10 @@ int main() {
 		std::cout << "exception throw: " << e.what() << std::endl;
 	}
 
+	std::cout << "matrix0:\n" << matrix0 << std::endl;
+	std::cout << "matrix1:\n" << matrix1 << std::endl;
 	matrix0.add(matrix1);
+	std::cout << "matrix0 + matrix1:\n" << matrix0 << std::endl;
 
 	std::cout << "|----- subtract tests -----|" << std::endl;
 	std::cout << "vector0: " << vector0 << std::endl;
@@ -37,7 +40,10 @@ int main() {
 	} catch(std::exception& e) {
 		std::cout << "exception throw: " << e.what() << std::endl;
 	}
+	std::cout << "matrix0:\n" << matrix0 << std::endl;
+	std::cout << "matrix1:\n" << matrix1 << std::endl;
 	matrix0.subtract(matrix1);
+	std::cout << "matrix0 - matrix1:\n" << matrix0 << std::endl;
 
 	std::cout << "|----- scale tests -----|" << std::endl;
 	std::cout << "vector0: " << vector0 << std::endl;
@@ -46,7 +52,10 @@ int main() {
 	vector0.scale(2.0);
 	std::cout << "vector0: " << vector0 << std::endl;
 
+	std::cout << "matrix0:\n" << matrix0 << std::endl;
+	std::cout << "matrix1:\n" << matrix1 << std::endl;
 	matrix0.scale(2.0);
+	std::cout << "matrix0 * 2:\n" << matrix0 << std::endl;
 
 
 	return 0;
