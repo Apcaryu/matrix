@@ -279,17 +279,31 @@ public:
 
 template <typename K>
 K lerp(K u, K v, float t) {
-	return 0.0f;
+	return 	((v - u) * t) + u;
 }
 
 template <typename K>
 Vector<K> lerp(Vector<K> u, Vector<K> v, float t) {
-	return Vector<K>();
+	const u_int32_t vector_size = u.getSize();
+	Vector<K> res;
+	for (u_int32_t idx = 0; idx < vector_size; idx++) {
+		res.append(lerp(u.getValue(idx), v.getValue(idx), t));
+	}
+	return res;
 };
 
 template <typename K>
 Matrix<K> lerp(Matrix<K> u, Matrix<K> v, float t) {
-	return Matrix<K>();
+	const int m_size = u.getShape().m;
+	const int n_size = u.getShape().n;
+	Matrix<K> res = Matrix<K>(std::vector<Vector<K>>{
+		lerp(Vector(u.getLine(0)), Vector(v.getLine(0)), t)
+	});
+
+	for (auto yPos = 1; yPos < n_size; yPos++) {
+		res.append(lerp(Vector(u.getLine(yPos)), Vector(v.getLine(yPos)), t));
+	}
+	return res;
 }
 
 template <typename K>
