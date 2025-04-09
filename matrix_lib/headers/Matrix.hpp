@@ -277,6 +277,20 @@ public:
 	}
 };
 
+template <typename K>
+K lerp(K u, K v, float t) {
+	return 0.0f;
+}
+
+template <typename K>
+Vector<K> lerp(Vector<K> u, Vector<K> v, float t) {
+	return Vector<K>();
+};
+
+template <typename K>
+Matrix<K> lerp(Matrix<K> u, Matrix<K> v, float t) {
+	return Matrix<K>();
+}
 
 template <typename K>
 std::ostream &operator<<(std::ostream &os, const Matrix<K> &matrix) {
