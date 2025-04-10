@@ -50,6 +50,13 @@ public:
 			throw std::invalid_argument("Matrix nPos out of range");
 		content[nPos] = Vector<K>(lineIn);
 	};
+	void setLine(Vector<K> lineIn, int nPos) { //TODO make tests for this function
+		if (lineIn.size() != shape.m)
+			throw std::invalid_argument("Matrix line size must match");
+		if (nPos >= shape.n)
+			throw std::invalid_argument("Matrix nPos out of range");
+		content[nPos] = lineIn;
+	}
 	void setColumn(std::vector<K> columnIn, int mPos) {
 		if (columnIn.size() != shape.n)
 			throw std::invalid_argument("Matrix column size must match");
@@ -60,6 +67,15 @@ public:
 			content[n++].setValue(val, mPos);
 		}
 	};
+	void setColumn(Vector<K> columnIn, int mPos) { //TODO make tests for this function
+		if (columnIn.size() != shape.n)
+			throw std::invalid_argument("Matrix column size must match");
+		if (mPos >= shape.m)
+			throw std::invalid_argument("Matrix mPos out of range");
+		for (auto nPos = 0; nPos < columnIn.getSize(); nPos++) {
+			content[nPos].setValue(columnIn.getValue(nPos), mPos);
+		}
+	}
 
 	[[nodiscard]] K getValue(u_int64_t nPos, u_int64_t mPos) const {
 		if (nPos >= shape.n || mPos >= shape.m)
@@ -71,6 +87,11 @@ public:
 			throw std::invalid_argument("Matrix nPos out of range");
 		return content[nPos].getVec();
 	};
+	[[nodiscard]] Vector<K> getLine(int nPos) {//TODO make tests for this funcion
+		if (nPos >= shape.n)
+			throw std::invalid_argument("Matrix nPos out of range");
+		return content[nPos];
+	}
 	[[nodiscard]] std::vector<K> getColumn(int mPos) const {
 		if (mPos >= shape.m)
 			throw std::invalid_argument("Matrix mPos out of range");
@@ -80,6 +101,17 @@ public:
 		}
 		return result;
 	};
+	[[nodiscard]] Vector<K> getColumn(int mPos) {//TODO make tests for this function
+		if (mPos >= shape.m)
+			throw std::invalid_argument("Matrix mPos out of range");
+		Vector<K> result;
+		// std::vector<K> result;
+		for (u_int64_t i = 0; i < shape.n; i++) {
+			result.append(content[i].getValue(mPos));
+			// result.push_back(content[i].getValue(mPos));
+		}
+		return result;
+	}
 	[[nodiscard]] std::vector<Vector<K>> getMatrix() const { return content; };
 	[[nodiscard]] matrixShape getShape() const { return shape; };
 	[[nodiscard]] bool isSquare() const {
@@ -294,14 +326,13 @@ Vector<K> lerp(Vector<K> u, Vector<K> v, float t) {
 
 template <typename K>
 Matrix<K> lerp(Matrix<K> u, Matrix<K> v, float t) {
-	const int m_size = u.getShape().m;
 	const int n_size = u.getShape().n;
 	Matrix<K> res = Matrix<K>(std::vector<Vector<K>>{
-		lerp(Vector(u.getLine(0)), Vector(v.getLine(0)), t)
+		lerp(u.getLine(0), v.getLine(0), t)
 	});
 
 	for (auto yPos = 1; yPos < n_size; yPos++) {
-		res.append(lerp(Vector(u.getLine(yPos)), Vector(v.getLine(yPos)), t));
+		res.append(lerp(u.getLine(yPos), v.getLine(yPos), t));
 	}
 	return res;
 }
