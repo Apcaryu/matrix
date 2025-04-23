@@ -389,6 +389,10 @@ Matrix<K> lerp(Matrix<K> u, Matrix<K> v, float t) {
 	return res;
 }
 
+float angle_cos(Vector<float>& u, Vector<float>& v) {
+	return 0.f;
+}
+
 template <typename K>
 std::ostream &operator<<(std::ostream &os, const Matrix<K> &matrix) {
 	for (auto vec : matrix.getMatrix()) {
