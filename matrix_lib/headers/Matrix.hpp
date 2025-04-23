@@ -1,5 +1,7 @@
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -325,13 +327,37 @@ public:
 	}
 
 	float norm_1() const {
-		return 0.f;
+		if (this->getSize() <= 0) {
+			throw std::invalid_argument("Vector size must be at least 1");
+		}
+		float result = 0;
+		for (int idx = 0; idx < this->getSize(); idx++) {
+			result += std::abs(this->getValue(idx));
+		}
+		return result;
 	}
 	float norm() const {
-		return 0.f;
+		if (this->getSize() <= 0) {
+			throw std::invalid_argument("Vector size must be at least 1");
+		}
+		float result = 0;
+		for (int idx = 0; idx < this->getSize(); idx++) {
+			result += pow(this->getValue(idx), 2);
+		}
+		return std::sqrt(result);
 	}
 	float norm_inf() const {
-		return 0.f;
+		if (this->getSize() <= 0) {
+			throw std::invalid_argument("Vector size must be at least 1");
+		}
+		float result = 0;
+		for (auto val: this->getVec()) {
+			K tmp = std::abs(val);
+			if (result < tmp) {
+				result = tmp;
+			}
+		}
+		return result;
 	}
 };
 
