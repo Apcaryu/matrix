@@ -308,8 +308,20 @@ public:
 		return vector_out;
 	}
 
-	K dot(Vector<K> vecIn) {
-		return 0.0f;
+	K dot(Vector<K> vecIn) const {
+		//(v.x*u.x) + (v.y*u.y)
+		if (vecIn.getSize() != this->getSize()) {
+			throw std::invalid_argument("Vector size must match");
+		}
+		if (vecIn.getSize() <= 0) {
+			throw std::invalid_argument("Vector size must be at least 1");
+		}
+
+		K result = vecIn.getValue(0) * this->getValue(0);
+		for (int idx = 1; idx < vecIn.getSize(); idx++) {
+			result += vecIn.getValue(idx) * this->getValue(idx);
+		}
+		return result;
 	}
 };
 
