@@ -323,6 +323,16 @@ public:
 		}
 		return result;
 	}
+
+	float norm_1() const {
+		return 0.f;
+	}
+	float norm() const {
+		return 0.f;
+	}
+	float norm_inf() const {
+		return 0.f;
+	}
 };
 
 template <typename K>
