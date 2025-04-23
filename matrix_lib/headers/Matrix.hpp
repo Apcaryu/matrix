@@ -389,8 +389,15 @@ Matrix<K> lerp(Matrix<K> u, Matrix<K> v, float t) {
 	return res;
 }
 
-float angle_cos(Vector<float>& u, Vector<float>& v) {
-	return 0.f;
+inline float angle_cos(Vector<float>& u, Vector<float>& v) {
+	if (u.getSize() != v.getSize()) {
+		throw std::invalid_argument("Vector size must match");
+	}
+	if (u.getSize() <= 0 || v.getSize() <= 0) {
+		throw std::invalid_argument("Vector size must be at least 1");
+	}
+
+	return u.dot(v) / (u.norm() * v.norm());
 }
 
 template <typename K>
