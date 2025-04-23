@@ -307,6 +307,10 @@ public:
 		}
 		return vector_out;
 	}
+
+	K dot(Vector<K> vecIn) {
+		return 0.0f;
+	}
 };
 
 template <typename K>
