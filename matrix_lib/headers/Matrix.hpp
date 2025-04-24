@@ -200,6 +200,12 @@ public:
 		}
 	}
 
+	Vector<K> mul_vec(Vector<K> vecIn) const {
+		return Vector<K>();
+	}
+	Matrix<K> mul_mat(Matrix<K> matrixIn) const{
+		return Matrix<K>();
+	}
 };
 
 template <typename K>
