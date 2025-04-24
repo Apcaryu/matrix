@@ -402,7 +402,18 @@ inline float angle_cos(Vector<float>& u, Vector<float>& v) {
 
 template <typename K>
 Vector<K> cross_product(Vector<K>& u, Vector<K>& v) {
-	return Vector<K>();
+	if (u.getSize() != v.getSize()) {
+		throw std::invalid_argument("Vector size must match");
+	}
+	if (u.getSize() != 3 || v.getSize() != 3) {
+		throw std::invalid_argument("Vector size must be 3");
+	}
+
+	K x_res = (u.getValue(1) * v.getValue(2)) - (u.getValue(2) * v.getValue(1));
+	K y_res = (u.getValue(2) * v.getValue(0)) - (u.getValue(0) * v.getValue(2));
+	K z_res = (u.getValue(0) * v.getValue(1)) - (u.getValue(1) * v.getValue(0));
+
+	return Vector<K>(std::vector{x_res, y_res, z_res});
 }
 
 template <typename K>
