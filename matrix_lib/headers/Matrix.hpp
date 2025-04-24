@@ -401,6 +401,11 @@ inline float angle_cos(Vector<float>& u, Vector<float>& v) {
 }
 
 template <typename K>
+Vector<K> cross_product(Vector<K>& u, Vector<K>& v) {
+	return Vector<K>();
+}
+
+template <typename K>
 std::ostream &operator<<(std::ostream &os, const Matrix<K> &matrix) {
 	for (auto vec : matrix.getMatrix()) {
 		os << "[ " << vec << " ]" << std::endl;
