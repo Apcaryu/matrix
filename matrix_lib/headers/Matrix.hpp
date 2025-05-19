@@ -201,7 +201,16 @@ public:
 	}
 
 	Vector<K> mul_vec(Vector<K> vecIn) const {
-		return Vector<K>();
+		if (vecIn.getSize() != this->getShape().m) {
+			throw std::invalid_argument("Matrix mul_vec size must match");
+		}
+		Vector<K> result(vecIn.getSize());
+		for (int yPos = 0; yPos < vecIn.getSize(); yPos++) {
+			Vector<K> tmp_vec(this->getColumn(yPos));
+			tmp_vec.scale(vecIn.getValue(yPos));
+			result.add(tmp_vec);
+		}
+		return result;
 	}
 	Matrix<K> mul_mat(Matrix<K> matrixIn) const{
 		return Matrix<K>();
@@ -218,6 +227,11 @@ public:
 	Vector() = default;
 	explicit Vector(std::vector<K> arrayIn) { vec = arrayIn; };
 	Vector(const Vector<K> &vectorIn) { *this = vectorIn; };
+	explicit Vector(int const sizeIn) {
+		for (int i = 0; i < sizeIn; i++) {
+			this->append(0);
+		}
+	}
 	~Vector() = default;
 
 	Vector<K> & operator=(Vector<K> const &rhs) {
