@@ -32,6 +32,13 @@ public:
 		
 	};
 	Matrix(const Matrix<K> &matrixIn) { *this = matrixIn; };
+	explicit Matrix(const matrixShape matrixShape) {
+		shape.m = matrixShape.m;
+		for (int i = 0; i < matrixShape.n; i++) {
+			Vector<K> vec = Vector<K>(matrixShape.m);
+			this->append(vec);
+		}
+	};
 	~Matrix() = default;
 
 	Matrix<K> & operator=(Matrix<K> const &rhs) {
@@ -120,6 +127,12 @@ public:
 		if(shape.n == shape.m) return true;
 		return false;
 	};
+	bool isSameSize(Matrix const &other) const {
+		if (shape.n != other.shape.n || shape.m != other.shape.m) {
+			return false;
+		}
+		return true;
+	}
 
 	bool isEqual(const Matrix<K> &rhs) const {
 		const matrixShape selfShape = this->getShape();
@@ -212,8 +225,17 @@ public:
 		}
 		return result;
 	}
-	Matrix<K> mul_mat(Matrix<K> matrixIn) const{
-		return Matrix<K>();
+	Matrix mul_mat(Matrix matrixIn) const{
+		if (!this->isSameSize(matrixIn)) {
+			throw std::invalid_argument("Matrix mul_mat does not support same size");
+		}
+		Matrix result(matrixIn.getShape());
+		// std::cout << result.getShape().n << ", " << result.getShape().m << std::endl;
+		for (int yPos = 0; yPos < matrixIn.getShape().m; yPos++) {
+			Vector<K> tmp_vec(this->mul_vec(matrixIn.getColumn(yPos)));
+			result.setLine(tmp_vec.getVec(), yPos);
+		}
+		return result;
 	}
 };
 
