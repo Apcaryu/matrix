@@ -237,6 +237,15 @@ public:
 		}
 		return result;
 	}
+
+	K trace() const {
+		if (this->getShape().n != this->getShape().m) {
+			throw std::invalid_argument("Matrix must be a square");
+		}
+
+		K res;
+		return res;
+	}
 };
 
 template <typename K>
