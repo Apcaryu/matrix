@@ -242,8 +242,10 @@ public:
 		if (this->getShape().n != this->getShape().m) {
 			throw std::invalid_argument("Matrix must be a square");
 		}
-
-		K res;
+		K res = 0;
+		for (int yPos = 0; yPos < this->getShape().n; yPos++) {
+			res += this->getValue(yPos, yPos);
+		}
 		return res;
 	}
 };
