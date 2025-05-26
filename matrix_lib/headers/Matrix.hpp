@@ -264,7 +264,12 @@ public:
 	}
 
 	Matrix transpose() const {
-		return Matrix();
+		Matrix result(this->getShape());
+		for (int yPos = 0; yPos < this->getShape().n; yPos++) {
+			Vector<K> tmp_vec(this->getColumn(yPos));
+			result.setLine(tmp_vec.getVec(), yPos);
+		}
+		return result;
 	}
 };
 
