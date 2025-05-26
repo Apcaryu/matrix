@@ -47,6 +47,20 @@ public:
 		return *this;
 	};
 
+	int operator==(Matrix const &rhs) const {
+		if (shape.m != rhs.shape.m || shape.n != rhs.shape.n) {
+			return 0;
+		}
+		for (auto i = 0; i < shape.n; i++) {
+			for (auto j = 0; j < shape.m; j++) {
+				if (this->getValue(i, j) != rhs.getValue(i, j)) {
+					return 0;
+				}
+			}
+		}
+		return 1;
+	}
+
 	void setValue(K valueIn, u_int64_t nPos, u_int64_t mPos) {
 		if (nPos >= shape.n || mPos >= shape.m)
 			throw std::invalid_argument("Matrix nPos or mPos out of range");
@@ -247,6 +261,10 @@ public:
 			res += this->getValue(yPos, yPos);
 		}
 		return res;
+	}
+
+	Matrix transpose() const {
+		return Matrix();
 	}
 };
 
