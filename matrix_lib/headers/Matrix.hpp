@@ -271,6 +271,10 @@ public:
 		}
 		return result;
 	}
+
+	Matrix row_echelon() const {
+		return Matrix();
+	}
 };
 
 template <typename K>
