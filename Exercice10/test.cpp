@@ -15,7 +15,7 @@ int main() {
 	}
 	{
 		const Matrix u(std::vector{Vector(std::vector{1.f, 2.f}),
-									Vector(std::vector{2.f, 4.f})});
+									Vector(std::vector{3.f, 4.f})});
 
 		std::cout << u.row_echelon() << std::endl;
 		// [1.0, 0.0]
@@ -23,7 +23,7 @@ int main() {
 	}
 	{
 		const Matrix u(std::vector{Vector(std::vector{1.f, 2.f}),
-									Vector(std::vector{3.f, 4.f})});
+									Vector(std::vector{2.f, 4.f})});
 
 		std::cout << u.row_echelon() << std::endl;
 		// [1.0, 2.0]

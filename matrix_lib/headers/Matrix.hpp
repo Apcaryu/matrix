@@ -74,7 +74,7 @@ public:
 		content[nPos] = Vector<K>(lineIn);
 	};
 	void setLine(Vector<K> lineIn, int nPos) { //TODO make tests for this function
-		if (lineIn.size() != shape.m)
+		if (lineIn.getSize() != shape.m)
 			throw std::invalid_argument("Matrix line size must match");
 		if (nPos >= shape.n)
 			throw std::invalid_argument("Matrix nPos out of range");
@@ -273,7 +273,52 @@ public:
 	}
 
 	Matrix row_echelon() const {
-		return Matrix();
+		Matrix result(*this);
+		int h = 0;
+		int k = 0;
+
+		while (h < result.getShape().n && k < result.getShape().m) {
+			int i_max = h;
+			K max_val = std::abs(result.getValue(h, k));
+
+			for (int i = h + 1; i < result.getShape().n; i++) {
+				K val = std::abs(result.getValue(i, k));
+				if (val > max_val) {
+					max_val = val;
+					i_max = i;
+				}
+			}
+
+			if (result.getValue(i_max, k) == 0) {
+				k++;
+				continue;
+			}
+
+			if (i_max != h) {
+				Vector<K> tmp = result.getLine(h);
+				result.setLine(result.getLine(i_max), h);
+				result.setLine(tmp, i_max);
+			}
+
+			K pivot = result.getValue(h, k);
+			for (int j = k; j < result.getShape().m; j++) {
+				result.setValue(result.getValue(h, j) / pivot, h, j);
+			}
+
+			for (int i = 0; i < result.getShape().n; i++) {
+				if (i != h) {
+					K factor = result.getValue(i, k);
+					for (int j = k; j < result.getShape().m; j++) {
+						K new_val = result.getValue(i, j) - factor * result.getValue(h, j);
+						result.setValue(new_val, i, j);
+					}
+				}
+			}
+			h++;
+			k++;
+		}
+
+		return result;
 	}
 };
 
