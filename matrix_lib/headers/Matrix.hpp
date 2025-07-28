@@ -320,6 +320,16 @@ public:
 
 		return result;
 	}
+
+	K determinant() const {
+		if (this->getShape().n != this->getShape().m) {
+			throw std::invalid_argument("Matrix must be a square");
+		}
+
+		K res = 0;
+
+		return res;
+	}
 };
 
 template <typename K>
