@@ -9,7 +9,7 @@ int main() {
 									Vector(std::vector{1.f, 2.f, 3.f})
 									});
 		try {
-			det = u.determinant();
+			[[maybe_unused]] float det = u.determinant();
 		} catch (const std::exception &e) {
 			std::cout << e.what() << std::endl;
 		}
