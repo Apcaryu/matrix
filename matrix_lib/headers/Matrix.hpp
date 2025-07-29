@@ -39,6 +39,19 @@ public:
 			this->append(vec);
 		}
 	};
+
+	//This is constructor for a generation of square matrix with a list of value
+	Matrix(const Vector<K> valueList, const int size) {
+		shape.n = size;
+		shape.m = size;
+		for (int i = 0; i < size; i++) {
+			Vector<K> tmp_vec;
+			for (int j = 0; j < size; j++) {
+				tmp_vec.append(valueList.getValue(j+size*i));
+			}
+			content.push_back(tmp_vec);
+		}
+	}
 	~Matrix() = default;
 
 	Matrix<K> & operator=(Matrix<K> const &rhs) {
@@ -355,6 +368,35 @@ public:
 		return res;
 	}
 
+	K det() const {
+		K res = 0;
+		bool isPlus = true;
+
+		for (int i = 0; i < this->getShape().n; i++) {
+			K val = this->getValue(i, 0);
+			std::vector<K> tmp_vec{};
+			for (int y = 1; y < this->getShape().n; y++) {
+				for (int x = 0; x < this->getShape().n; x++) {
+					if (x != i) {
+						tmp_vec.push_back(this->getValue(x, y));
+					}
+				}
+			}
+
+			Matrix tmp_mat{Vector<K>(tmp_vec), this->getShape().n-1};
+			K tmp_res = 0;
+			if (!isPlus) {
+				tmp_res = val * tmp_mat.determinant() * -1;
+			} else {
+				tmp_res = val * tmp_mat.determinant();
+			}
+			res += tmp_res;
+			isPlus = !isPlus;
+		}
+
+		return res;
+	}
+
 	K determinant() const {
 		if (!this->isSquare()) {
 			throw std::invalid_argument("Matrix must be a square");
@@ -363,10 +405,12 @@ public:
 		K res = 0;
 		if (this->getShape().n == 2) {
 			res = det2();
-		}
-		if (this->getShape().n == 3) {
+		} else if (this->getShape().n == 3) {
 			res = det3();
+		} else {
+			res = det();
 		}
+
 		return res;
 	}
 };

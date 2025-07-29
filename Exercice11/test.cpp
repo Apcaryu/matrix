@@ -1,7 +1,11 @@
 #include "../matrix_lib/headers/Matrix.hpp"
 
 int main() {
-
+	//----- SPECIAL TESTS -----//
+	{
+		const Matrix u(Vector{std::vector{0.f, 1.f, 2.f, 3.f}}, 2);
+		std::cout << u;
+	}
 	//----- PERSONAL TESTS -----//
 
 	{
