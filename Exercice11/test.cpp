@@ -15,6 +15,27 @@ int main() {
 		}
 	}
 
+	// 2x2 matrix
+	{
+		const Matrix u(std::vector{Vector(std::vector{1.f, 3.f}),
+									Vector(std::vector{7.f, 4.f})
+									});
+
+		std::cout << u.determinant() << std::endl;
+		// -17
+	}
+
+	// 3x3
+	{
+		const Matrix u(std::vector{Vector(std::vector{2.f, 4.f, -5.f}),
+									Vector(std::vector{8.f, 1.f, -3.f}),
+									Vector(std::vector{-9.f, 6.f, 7.f}),
+									});
+
+		std::cout << u.determinant() << std::endl;
+		// -351
+	}
+
 	//----- SUBJECT TESTS -----//
 	{
 		const Matrix u(std::vector{Vector(std::vector{1.f, -1.f}),

@@ -321,13 +321,52 @@ public:
 		return result;
 	}
 
+	// case 2x2 matrix determinant
+	K det2() const {
+		K res = 0;
+
+		K a = this->getValue(0, 0);
+		K b = this->getValue(0, 1);
+		K c = this->getValue(1, 0);
+		K d = this->getValue(1, 1);
+
+		res = a*d - b*c;
+
+		return res;
+
+	}
+
+	// case 3x3 matrix determinant
+	K det3() const {
+		K res = 0;
+
+		K a = this->getValue(0, 0);
+		K b = this->getValue(0, 1);
+		K c = this->getValue(0, 2);
+		K d = this->getValue(1, 0);
+		K e = this->getValue(1, 1);
+		K f = this->getValue(1, 2);
+		K g = this->getValue(2, 0);
+		K h = this->getValue(2, 1);
+		K i = this->getValue(2, 2);
+
+		res = a*e*i + d*h*c + b*f*g - (g*e*c + d*b*i + a*h*f);
+
+		return res;
+	}
+
 	K determinant() const {
-		if (this->getShape().n != this->getShape().m) {
+		if (!this->isSquare()) {
 			throw std::invalid_argument("Matrix must be a square");
 		}
 
 		K res = 0;
-
+		if (this->getShape().n == 2) {
+			res = det2();
+		}
+		if (this->getShape().n == 3) {
+			res = det3();
+		}
 		return res;
 	}
 };
