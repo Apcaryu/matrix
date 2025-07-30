@@ -31,7 +31,9 @@ public:
 		shape.n = vecList.size();
 		
 	};
+
 	Matrix(const Matrix<K> &matrixIn) { *this = matrixIn; };
+
 	explicit Matrix(const matrixShape matrixShape) {
 		shape.m = matrixShape.m;
 		for (int i = 0; i < matrixShape.n; i++) {
@@ -52,6 +54,22 @@ public:
 			content.push_back(tmp_vec);
 		}
 	}
+
+	// create identity matrix
+	explicit Matrix(const int size) {
+		shape.n = size;
+		shape.m = size;
+		Vector<K> zero_vec;
+		for (int i = 0; i < size; i++) {
+			zero_vec.append(0);
+		}
+		for (int i = 0; i < size; i++) {
+			//std::cout << *this << std::endl;
+			content.push_back(zero_vec);
+			this->setValue(1, i, i);
+		}
+	}
+
 	~Matrix() = default;
 
 	Matrix<K> & operator=(Matrix<K> const &rhs) {
@@ -123,7 +141,7 @@ public:
 			throw std::invalid_argument("Matrix nPos out of range");
 		return content[nPos].getVec();
 	};
-	[[nodiscard]] Vector<K> getLine(int nPos) {//TODO make tests for this funcion
+	[[nodiscard]] Vector<K> getLineVec(int nPos) const {//TODO make tests for this funcion
 		if (nPos >= shape.n)
 			throw std::invalid_argument("Matrix nPos out of range");
 		return content[nPos];
@@ -308,7 +326,7 @@ public:
 			}
 
 			if (i_max != h) {
-				Vector<K> tmp = result.getLine(h);
+				Vector<K> tmp = result.getLineVec(h);
 				result.setLine(result.getLine(i_max), h);
 				result.setLine(tmp, i_max);
 			}
@@ -411,6 +429,33 @@ public:
 			res = det();
 		}
 
+		return res;
+	}
+
+	Matrix augmented_matrix(Matrix right) const {
+		matrixShape am_shape;
+		am_shape.n = this->getShape().n;
+		am_shape.m = this->getShape().m + right.getShape().m;
+		Matrix res(am_shape);
+
+		for (int i = 0; i < am_shape.n; i++) {
+			Vector<K> tmp = this->getLineVec(i);
+			tmp.append(right.getLineVec(i));
+			res.setLine(tmp, i);
+		}
+		return res;
+	}
+
+	Matrix inverse() const {
+		Matrix res{this->getShape()};
+		Matrix tmp = this->augmented_matrix(Matrix{this->getShape().n}).row_echelon();
+
+		std::cout << tmp.getValue(0, 3) << std::endl;
+		for (int i = 0; i < res.getShape().n; i++) {
+			for (int j = 0; j < res.getShape().m; j++) {
+				res.setValue(tmp.getValue(i, j+res.getShape().m),i,j);
+			}
+		}
 		return res;
 	}
 };
