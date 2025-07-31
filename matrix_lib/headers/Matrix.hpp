@@ -458,6 +458,12 @@ public:
 		}
 		return res;
 	}
+
+	size_t rank() const {
+		size_t res = 0;
+
+		return res;
+	}
 };
 
 template <typename K>
