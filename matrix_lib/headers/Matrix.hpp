@@ -461,7 +461,11 @@ public:
 
 	size_t rank() const {
 		size_t res = 0;
+		const Matrix echelon_form = this->row_echelon();
 
+		for (int i = 0; i < echelon_form.getShape().n; i++) {
+			if (!echelon_form.getLineVec(i).isZeroVector()) { res++; }
+		}
 		return res;
 	}
 };
@@ -506,6 +510,13 @@ public:
 		if (this->getVec() == rhs.getVec())
 			return true;
 		return false;
+	}
+
+	bool isZeroVector() const {
+		for (int i = 0; i < this->getSize(); i++) {
+			if (vec[i] != 0) { return false; }
+		}
+		return true;
 	}
 
 	void append(K value) {

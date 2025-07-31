@@ -1,6 +1,17 @@
 #include "../matrix_lib/headers/Matrix.hpp"
 
 int main() {
+	//----- SPECIAL TESTS -----//
+	{
+		const Vector x(std::vector{1.f, 0.f, 1.5f});
+		const Vector y(std::vector{0.f, 0.f, 1.f});
+		const Vector z(std::vector{0.f, 0.f, 0.f});
+
+		std::cout << "x: " << x.isZeroVector() << std::endl;
+		std::cout << "y: " << y.isZeroVector() << std::endl;
+		std::cout << "z: " << z.isZeroVector() << std::endl;
+	}
+
 	//----- SUBJECT TESTS -----//
 	{
 		const Matrix u(std::vector{Vector(std::vector{1.f, 0.f, 0.f}),
