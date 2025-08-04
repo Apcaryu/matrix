@@ -18,8 +18,8 @@ compile_lib:
 $(TEST): $(OBJS_TEST)
 	$(CXX) -o $(TEST) $(OBJS_TEST) $(LIB)
 
-$(OBJS_TEST):
-	$(CXX) $(CFLAGS) -o $(OBJS_TEST) -c $(TEST_FILE)
+$(OBJS_TEST): $(TEST_FILE)
+	$(CXX) $(CFLAGS) -c $(TEST_FILE) -o $(OBJS_TEST)
 
 PHONY: clean
 clean:

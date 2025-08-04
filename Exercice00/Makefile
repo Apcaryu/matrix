@@ -19,7 +19,7 @@ PHONY: clean
 clean:
 	-rm $(OBJS_TEST)
 
-PHONY: fclean
+.PHONY: fclean
 fclean: clean
 	-rm $(TEST)
 
@@ -28,5 +28,8 @@ re: fclean all
 $(TEST): $(OBJS_TEST)
 	$(CXX) -o $(TEST) $(OBJS_TEST) $(LIB)
 
-$(OBJS_TEST):
-	$(CXX) $(CFLAGS) -o $(OBJS_TEST) -c $(TEST_FILE)
+$(OBJS_TEST): $(TEST_FILE)
+	$(CXX) $(CFLAGS) -c $(TEST_FILE) -o $(OBJS_TEST)
+
+#$(OBJS_TEST):
+#	$(CXX) $(CFLAGS) -o $(OBJS_TEST) -c $(TEST_FILE)
