@@ -1,4 +1,4 @@
-all: lib exercice00
+all: lib all_exercice
 
 lib:
 	make -C matrix_lib/
@@ -7,33 +7,48 @@ all_exercice: exercice00 exercice01 exercice02 exercice03 exercice04 exercice05 
 				exercice09 exercice10 exercice11 exercice12 exercice13
 
 exercice00:
-	make -C Exercice00/
+	@echo "| ----- Building Exercice00 ----- |"
+	-make -C Exercice00/
 exercice01:
-	make -C Exercice01/
+	@echo "| ----- Building Exercice01 ----- |"
+	-make -C Exercice01/
 exercice02:
-	make -C Exercice02/
+	@echo "| ----- Building Exercice02 ----- |"
+	-make -C Exercice02/
 exercice03:
-	make -C Exercice03/
+	@echo "| ----- Building Exercice03 ----- |"
+	-make -C Exercice03/
 exercice04:
-	make -C Exercice04/
+	@echo "| ----- Building Exercice04 ----- |"
+	-make -C Exercice04/
 exercice05:
-	make -C Exercice05/
+	@echo "| ----- Building Exercice05 ----- |"
+	-make -C Exercice05/
 exercice06:
-	make -C Exercice06/
+	@echo "| ----- Building Exercice06 ----- |"
+	-make -C Exercice06/
 exercice07:
-	make -C Exercice07/
+	@echo "| ----- Building Exercice07 ----- |"
+	-make -C Exercice07/
 exercice08:
-	make -C Exercice08/
+	@echo "| ----- Building Exercice08 ----- |"
+	-make -C Exercice08/
 exercice09:
-	make -C Exercice09/
+	@echo "| ----- Building Exercice09 ----- |"
+	-make -C Exercice09/
 exercice10:
-	make -C Exercice10/
+	@echo "| ----- Building Exercice10 ----- |"
+	-make -C Exercice10/
 exercice11:
-	make -C Exercice11/
+	@echo "| ----- Building Exercice11 ----- |"
+	-make -C Exercice11/
 exercice12:
-	make -C Exercice12/
+	@echo "| ----- Building Exercice12 ----- |"
+	-make -C Exercice12/
 exercice13:
-	make -C Exercice13/
+	@echo "| ----- Building Exercice13 ----- |"
+	-make -C Exercice13/
+
 .PHONY: clean
 clean:
 	make clean -C Exercice00/
@@ -52,6 +67,7 @@ clean:
 	make clean -C Exercice13/
 	make clean -C matrix_lib/
 
+.PHONY: fclean
 fclean:
 	make fclean -C Exercice00/
 	make fclean -C Exercice01/
@@ -70,3 +86,6 @@ fclean:
 	make fclean -C matrix_lib/
 
 re: fclean all
+
+.PHONY: all lib all_exercice exercice00 exercice01 exercice02 exercice03 exercice04 exercice05 exercice06 \
+		exercice07 exercice08 exercice09 exercice10 exercice11 exercice12 exercice13

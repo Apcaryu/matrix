@@ -21,11 +21,11 @@ $(TEST): $(OBJS_TEST)
 $(OBJS_TEST): $(TEST_FILE)
 	$(CXX) $(CFLAGS) -c $(TEST_FILE) -o $(OBJS_TEST)
 
-PHONY: clean
+.PHONY: clean
 clean:
 	-rm $(OBJS_TEST)
 
-PHONY: fclean
+.PHONY: fclean
 fclean: clean
 	-rm $(TEST)
 

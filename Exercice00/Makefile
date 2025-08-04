@@ -15,7 +15,7 @@ all : compile_lib $(TEST)
 compile_lib:
 	make -C ../matrix_lib/
 
-PHONY: clean
+.PHONY: clean
 clean:
 	-rm $(OBJS_TEST)
 
